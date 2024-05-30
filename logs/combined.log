@@ -1852,3 +1852,24 @@
 {"level":"info","message":"Listening on port 3000","module":"server"}
 {"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}
 {"data":{"body":{},"headers":{"accept":"application/json","accept-encoding":"gzip, deflate, br, zstd","accept-language":"en-GB,en-US;q=0.9,en;q=0.8","connection":"keep-alive","cookie":"_ga=GA1.1.2123637201.1715943635; _gid=GA1.1.853775170.1716778597","dnt":"1","host":"localhost:3000","referer":"http://localhost:3000/api-docs/swagger/","sec-ch-ua":"\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\"","sec-fetch-dest":"empty","sec-fetch-mode":"cors","sec-fetch-site":"same-origin","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"},"ip":"::1","params":{},"query":{}},"level":"info","message":"GET /api/v1/users/ \u001b[32m200\u001b[0m - 17 ms","module":"server"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"MongoDB connected successfully","module":"mongodb"}
+{"level":"info","message":"Listening on port 3000","module":"server"}
+{"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"MongoDB connected successfully","module":"mongodb"}
+{"level":"info","message":"Listening on port 3000","module":"server"}
+{"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"MongoDB connected successfully","module":"mongodb"}
+{"level":"info","message":"Listening on port 3000","module":"server"}
+{"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}

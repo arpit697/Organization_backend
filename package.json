@@ -36,7 +36,7 @@
     "swagger-express-ts": "^1.0.0",
     "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.5",
     "winston": "^3.11.0"
   }
 }
