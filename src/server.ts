@@ -1,7 +1,7 @@
-const { Application } = require('./app/app');
+import { Application } from './app/app';
 
 try {
     Application.init();
-} catch (error) {
-    // console.error(error.message);
+} catch (error:any) {
+    console.error(error.message);
 }
