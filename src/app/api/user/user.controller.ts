@@ -211,7 +211,6 @@ class no {
     },
   })
     async attendance(req: Request, res: Response, next: NextFunction) {
-      console.log(req.body , 'dsffffffffffffffffffffffffffffffffffffffffffffffffff')
       usersService.addAttendance(req.body)
       res.success("attendance added successfully" )
     }
