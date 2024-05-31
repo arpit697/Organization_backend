@@ -166,7 +166,7 @@ export class Application {
                         version: '1.0'
                     },
                     basePath: '/api/v1',
-                    schemes: ['http']
+                    schemes: ['http' , 'https']
                 }
             })
         );
