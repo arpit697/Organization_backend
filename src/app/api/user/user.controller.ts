@@ -188,34 +188,6 @@ class UserController {
   }
 }
 
-@ApiPath({
-    path: '/attendance',
-    name: 'Attendance'
-})
-class no {
-  @ApiOperationPost({
-    description: "Post Attendance",
-    summary: "Post Attendance",
-    parameters: {
-      body: {
-        description: "Post Attendance",
-        required: true,
-        model: "AttendanceDataModel",
-      },
-    },
-    responses: {
-      200: {
-        description: "Success",
-        type: "String",
-      },
-    },
-  })
-    async attendance(req: Request, res: Response, next: NextFunction) {
-      usersService.addAttendance(req.body)
-      res.success("attendance added successfully" )
-    }
 
-}
-export const No = new no();
 
 export const userController = new UserController();

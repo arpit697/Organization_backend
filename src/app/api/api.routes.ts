@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import './api.swagger';
-import { noRoutes, userRoutes } from './user/user.routes';
+import { userRoutes } from './user/user.routes';
+import { attendanceRoute } from './attendance/attendance.routes';
 
 const router: Router = Router();
-const attendRouter : Router = Router()
 router.use('/users', userRoutes);
-router.use('/attendance' , noRoutes);
+router.use('/attendance' , attendanceRoute)
 
-export const apiRouter = [router , attendRouter];
+export const apiRouter = [router];

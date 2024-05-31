@@ -31,15 +31,3 @@ export class RegisterData {
     user_password: string;
 }
 
-@ApiModel({
-    description: "Attendance Data model",
-    name: "AttendanceDataModel",
-})
-export class AttendanceDataModel {
-    @ApiModelProperty({
-        description: "attendance",
-        required: true,
-        type: '',
-    })
-    attendance: object;
-}
