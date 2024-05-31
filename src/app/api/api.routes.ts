@@ -4,6 +4,7 @@ import { noRoutes, userRoutes } from './user/user.routes';
 
 const router: Router = Router();
 
-router.use('/users', userRoutes);
 router.use('/attendance' , noRoutes)
+router.use('/users', userRoutes);
+
 export const apiRouter = router;
