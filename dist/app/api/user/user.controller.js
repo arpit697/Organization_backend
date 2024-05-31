@@ -44,6 +44,10 @@ let UserController = class UserController {
                 else {
                     if (user_name && user_email && user_password && confirm_password) {
                         if (user_password === confirm_password) {
+                            user_service_1.usersService.registerUser({ user_name, user_email, user_password });
+                            res.success("User Registerd Successfully in Data base", {
+                                user_name, user_email
+                            });
                         }
                         else {
                             res.status(400).json({ message: "Password And Confirm Password" });
@@ -224,23 +228,4 @@ UserController = __decorate([
         name: "Users",
     })
 ], UserController);
-// @ApiPath({
-//     path: '/ram',
-//     name: 'ram'
-// })
-// class no {
-//     @ApiOperationGet({
-//         description: 'Get User By Name',
-//         summary: 'Get User By Name',
-//         responses: {}
-//     })
-//     async getUserByName(req: Request, res: Response, next: NextFunction) {
-//         const name = req.params.name;
-//         // Call your service method to get user by name
-//         // For example:
-//         // const user = await usersService.getUserByName(name);
-//         // res.success('User found', user);
-//     }
-// }
-// export const No = new no();
 exports.userController = new UserController();

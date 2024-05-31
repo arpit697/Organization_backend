@@ -60,7 +60,7 @@ class Application {
      */
     constructor() {
         this.instance = (0, express_1.default)();
-        this.environment = process.env.NODE_ENV || 'development';
+        this.environment = process.env.NODE_ENV || 'development' || 'production';
         this.instance.set('port', config_1.default.get('app.port'));
         serverLogger.info(`Application initialized. Port: ${this.instance.get('port')}. Environment: ${this.environment}`);
     }
@@ -183,7 +183,7 @@ class Application {
                     version: '1.0'
                 },
                 basePath: '/api/v1',
-                schemes: ['http']
+                schemes: ['http', 'https']
             }
         }));
     }

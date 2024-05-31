@@ -1873,3 +1873,13 @@
 {"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}
 {"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
 {"level":"info","message":"Connecting MongoDB with URI \"mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1\"","module":"mongodb"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb+srv://marpit697ad:QfBRU3eFwyDr5250@cluster0.f5vjeja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0\"","module":"mongodb"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"MongoDB connected successfully","module":"mongodb"}
+{"level":"info","message":"Listening on port 3000","module":"server"}
+{"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}
+{"level":"info","message":"Connecting MongoDB with URI \"mongodb+srv://marpit697ad:QfBRU3eFwyDr5250@cluster0.f5vjeja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0\"","module":"mongodb"}
+{"level":"info","message":"Application initialized. Port: 3000. Environment: development","module":"server"}
+{"level":"info","message":"MongoDB connected successfully","module":"mongodb"}
+{"level":"info","message":"Listening on port 3000","module":"server"}
+{"level":"info","message":"Swagger URL \"http://localhost:3000/api-docs/swagger\"","module":"server"}

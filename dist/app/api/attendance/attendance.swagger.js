@@ -9,38 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterData = void 0;
+exports.AttendanceData = void 0;
 const swagger_express_ts_1 = require("swagger-express-ts");
-let RegisterData = class RegisterData {
+let AttendanceData = class AttendanceData {
 };
-exports.RegisterData = RegisterData;
+exports.AttendanceData = AttendanceData;
 __decorate([
     (0, swagger_express_ts_1.ApiModelProperty)({
-        description: "name of user",
+        description: "attendance",
         required: true,
         type: '',
     }),
-    __metadata("design:type", String)
-], RegisterData.prototype, "user_name", void 0);
-__decorate([
-    (0, swagger_express_ts_1.ApiModelProperty)({
-        description: "email of user",
-        required: true,
-        type: '',
-    }),
-    __metadata("design:type", String)
-], RegisterData.prototype, "user_email", void 0);
-__decorate([
-    (0, swagger_express_ts_1.ApiModelProperty)({
-        description: "password of user",
-        required: true,
-        type: '',
-    }),
-    __metadata("design:type", String)
-], RegisterData.prototype, "user_password", void 0);
-exports.RegisterData = RegisterData = __decorate([
+    __metadata("design:type", Object)
+], AttendanceData.prototype, "attendance", void 0);
+exports.AttendanceData = AttendanceData = __decorate([
     (0, swagger_express_ts_1.ApiModel)({
-        description: "Register User Data",
-        name: "RegisterDataModel",
+        description: "Attendance Data model",
+        name: "AttendanceDataModel",
     })
-], RegisterData);
+], AttendanceData);
