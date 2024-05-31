@@ -34,7 +34,7 @@ export class RegisterData {
 
 export class AttendanceDataModel {
     @ApiModelProperty({
-        description: "attendance data",
+        description: "attendance",
         required: true,
         type: '',
 
