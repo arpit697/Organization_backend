@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongoose";
-import { UserModel } from "./user.model";
+import { AttendanceModel, UserModel } from "./user.model";
 
 class UsersService {
   async getUsers(query?: any) {
@@ -20,6 +20,10 @@ class UsersService {
 
   async deleteUser(payload: any) {
     return await UserModel.deleteOne(payload);
+  }
+
+  async addAttendance(payload:any){
+    return await AttendanceModel.create(payload);
   }
 }
 
