@@ -190,7 +190,7 @@ class UserController {
 
 @ApiPath({
     path: '/attendance',
-    name: 'attendance'
+    name: 'Attendance'
 })
 class no {
   @ApiOperationPost({
