@@ -20,7 +20,7 @@ const serverLogger = createNewLogger('server');
  */
 export class Application {
     instance = express();
-    environment = process.env.NODE_ENV || 'development';
+    environment = process.env.NODE_ENV || 'development' || 'production';
 
     /**
      * Constructs an instance of Application.

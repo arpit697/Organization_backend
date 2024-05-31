@@ -1,0 +1,24 @@
+{
+    "app": {
+      "secretKey": "your_secret_key_here"
+    },
+  
+    "swagger": {
+      "url": "https://organization-backend.onrender.com"
+    },
+    "mongo": {
+      "uri": "mongodb+srv://marpit697ad:QfBRU3eFwyDr5250@cluster0.f5vjeja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+      "dbName": "Organization",
+      "isLocal": false
+    },
+    "secrets": {
+      "USER": {
+        "authToken": "userAuthTokenValue"
+      },
+      "SUPER_ADMIN": {
+        "authToken": "superAdminAuthTokenValue"
+      }
+    }
+  
+  }
+  
