@@ -1,0 +1,25 @@
+{
+    "app": {
+      "port": 3000,
+      "secretKey": "your_secret_key_here"
+    },
+  
+    "swagger": {
+      "url": "http://localhost:3000"
+    },
+    "mongo": {
+      "uri": "mongodb+srv://marpit697ad:QfBRU3eFwyDr5250@cluster0.f5vjeja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+      "dbName": "Organization_Test",
+      "isLocal": true
+    },
+    "secrets": {
+      "USER": {
+        "authToken": "userAuthTokenValue"
+      },
+      "SUPER_ADMIN": {
+        "authToken": "superAdminAuthTokenValue"
+      }
+    }
+  
+  }
+  

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sessionService = void 0;
-const user_type_constants_1 = require("src/app/constants/user.type.constants");
-const jwt_utils_1 = require("src/app/utils/jwt.utils");
+const user_type_constants_1 = require("../../constants/user.type.constants");
+const jwt_utils_1 = require("../../utils/jwt.utils");
 const session_model_1 = require("./session.model");
 class SessionService {
     create(client, user) {

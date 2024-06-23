@@ -8,7 +8,7 @@
     },
     "mongo": {
       "uri": "mongodb+srv://marpit697ad:QfBRU3eFwyDr5250@cluster0.f5vjeja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-      "dbName": "Organization",
+      "dbName": "Organization_Production",
       "isLocal": false
     },
     "secrets": {

@@ -48,7 +48,14 @@ const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const compression_1 = __importDefault(require("compression"));
 const api_routes_1 = require("./api/api.routes");
-const serverLogger = (0, logger_1.createNewLogger)('server');
+const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
+const cron_1 = require("cron");
+const socket_io_1 = require("socket.io"); // Import Socket.IO
+const attendanc_service_1 = require("./api/attendance/attendanc.service");
+const serverLogger = (0, logger_1.createNewLogger)("server");
+const envFilePath = path_1.default.resolve(__dirname, `../.env.${process.env.NODE_ENV || "default"}`);
+dotenv_1.default.config({ path: envFilePath });
 /**
  * The main application class responsible for initializing the Express server.
  * @class
@@ -60,16 +67,35 @@ class Application {
      */
     constructor() {
         this.instance = (0, express_1.default)();
-        this.environment = process.env.NODE_ENV || 'development' || 'production';
-        this.instance.set('port', config_1.default.get('app.port'));
-        serverLogger.info(`Application initialized. Port: ${this.instance.get('port')}. Environment: ${this.environment}`);
+        this.environment = process.env.NODE_ENV || "default";
+        const port = config_1.default.get("app.port") || 3000;
+        this.instance.set("port", port);
+        serverLogger.info(`Application initialized. Port: ${port}. Environment: ${this.environment}`);
+        // Create HTTP server and initialize Socket.IO
+        this.httpServer = new http_1.Server(this.instance);
+        this.io = new socket_io_1.Server(this.httpServer);
+        this.setupSocketIO(); // Setup Socket.IO
+        // Handle HTTP server events
+        this.httpServer
+            .listen(port, () => {
+            serverLogger.info(`Server is running on port ${port}`);
+        })
+            .on("error", (error) => {
+            if (error.code === "EADDRINUSE") {
+                serverLogger.error(`Port ${port} is already in use`);
+                process.exit(1);
+            }
+            else {
+                throw error;
+            }
+        });
     }
     /**
      * Get the configured port.
      * @returns {number} The configured port.
      */
     get port() {
-        return this.instance.get('port');
+        return this.instance.get("port");
     }
     /**
      * Initialize the application and start the server.
@@ -77,52 +103,21 @@ class Application {
      */
     static init() {
         const app = new Application();
-        const server = new http_1.Server(app.instance);
-        // Event listeners for server startup and error handling
-        server.on('listening', () => {
-            const addr = server.address();
-            const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-            serverLogger.info('Listening on ' + bind);
-        });
-        server.on('error', (error) => {
-            if (error.syscall !== 'listen') {
-                throw error;
-            }
-            const bind = typeof app.port === 'string' ? 'Pipe ' + app.port : 'Port ' + app.port;
-            switch (error.code) {
-                case 'EACCES':
-                    serverLogger.error(bind + ' requires elevated privileges');
-                    process.exit(1);
-                case 'EADDRINUSE':
-                    serverLogger.error(bind + ' is already in use');
-                    process.exit(1);
-                default:
-                    throw error;
-            }
-        });
         // Handle SIGTERM signal for graceful shutdown
-        process.on('SIGTERM', () => {
-            serverLogger.info('SIGTERM signal received.');
-            serverLogger.info('Closing http server.');
-            server.close(() => __awaiter(this, void 0, void 0, function* () {
-                serverLogger.info('Http server closed.');
+        process.on("SIGTERM", () => {
+            serverLogger.info("SIGTERM signal received.");
+            serverLogger.info("Closing HTTP server.");
+            app.httpServer.close(() => __awaiter(this, void 0, void 0, function* () {
+                serverLogger.info("HTTP server closed.");
                 // Close All Database Connections
                 yield Promise.all([mongo_db_1.mongoDAO.close()]);
-                // close process
+                // Close process
                 process.exit(0);
             }));
         });
         // Load application configurations and start the server
-        app
-            .load()
-            .then(() => {
-            server.listen(app.port, () => {
-                serverLogger.info(`Swagger URL "${config_1.default.get('swagger.url')}/api-docs/swagger"`);
-            });
-        })
-            .catch((error) => {
-            serverLogger.info(Object.keys(error));
-            serverLogger.error(error.message || 'App Loading failed');
+        app.load().catch((error) => {
+            serverLogger.error(error.message || "App Loading failed");
             process.exit(1);
         });
     }
@@ -133,13 +128,17 @@ class Application {
     load() {
         return __awaiter(this, void 0, void 0, function* () {
             this.initConfig();
-            this.instance.use('/api/v1', api_routes_1.apiRouter);
+            this.instance.use("/api/v1", api_routes_1.apiRouter);
             yield Promise.all([mongo_db_1.mongoDAO.connect()]);
+            // Root route to render the index page
+            this.instance.get("/", (req, res) => {
+                res.render("index", { title: "My App" });
+            });
             this.instance.use((err, req, res, next) => {
                 res.status(err.status || 400).json({ message: err.message });
             });
             this.instance.use((req, res) => {
-                res.status(404).json({ message: 'Not Found' });
+                res.status(404).json({ message: "Not Found" });
             });
         });
     }
@@ -148,7 +147,7 @@ class Application {
      */
     initConfig() {
         // Enable CORS only in development environment
-        if (this.environment === 'development') {
+        if (this.environment === "development") {
             this.instance.use((0, cors_1.default)());
         }
         // Use API middleware
@@ -162,30 +161,114 @@ class Application {
         // Enable compression for response
         this.instance.use((0, compression_1.default)());
         // Disable 'x-powered-by' header
-        this.instance.disable('x-powered-by');
+        this.instance.disable("x-powered-by");
         // Parse JSON requests with a limit of 50mb
-        this.instance.use(express_1.default.json({ limit: '50mb' }));
+        this.instance.use(express_1.default.json({ limit: "50mb" }));
         // Parse URL-encoded requests with a limit of 50mb
-        this.instance.use(express_1.default.urlencoded({ extended: true, limit: '50mb' }));
+        this.instance.use(express_1.default.urlencoded({ extended: true, limit: "50mb" }));
+        // Set EJS as the view engine
+        this.instance.set("view engine", "ejs");
+        this.instance.set("views", path_1.default.join(__dirname, "../views")); // Adjust path as necessary
+        // Start the cron job
+        // this.startCronJob();
     }
     /**
      * Initialize Swagger documentation.
      */
     initSwagger() {
         // Serve Swagger UI and definition files
-        this.instance.use('/api-docs/swagger', express_1.default.static('swagger'));
-        this.instance.use('/api-docs/swagger/assets', express_1.default.static('node_modules/swagger-ui-dist'));
+        this.instance.use("/api-docs/swagger", express_1.default.static("swagger"));
+        this.instance.use("/api-docs/swagger/assets", express_1.default.static("node_modules/swagger-ui-dist"));
         // Initialize swagger-express-ts middleware
         this.instance.use(swagger.express({
             definition: {
                 info: {
-                    title: 'Organization Back-End',
-                    version: '1.0'
+                    title: "Organization Back-End",
+                    version: "1.0.0",
+                    description: "API documentation for the Organization Back-End",
+                    termsOfService: process.env.TERMS_URL || "http://example.com/terms/",
+                    contact: {
+                        name: "API Support",
+                        url: process.env.SUPPORT_URL || "http://example.com/support",
+                        email: process.env.SUPPORT_EMAIL || "support@example.com",
+                    },
+                    license: {
+                        name: "Apache 2.0",
+                        url: "https://www.apache.org/licenses/LICENSE-2.0.html",
+                    },
                 },
-                basePath: '/api/v1',
-                schemes: ['http', 'https']
-            }
+                basePath: "/api/v1",
+                schemes: ["http", "https"],
+                openapi: "2.0.0",
+                host: process.env.HOST || "localhost:3000",
+                models: {
+                    ExampleModel: {
+                        description: "An example model",
+                        properties: {
+                            exampleProperty: {
+                                type: "string",
+                                description: "An example property",
+                            },
+                        },
+                    },
+                },
+                securityDefinitions: {
+                    bearerAuth: {
+                        type: "http",
+                        in: "header",
+                        name: "Authorization",
+                    },
+                    apiKeyAuth: {
+                        type: "apiKey",
+                        in: "header",
+                        name: "X-API-KEY",
+                    },
+                },
+                responses: {
+                    ExampleResponse: {
+                        description: "An example response",
+                    },
+                },
+            },
         }));
+    }
+    /**
+     * Setup Socket.IO.
+     */
+    setupSocketIO() {
+        this.io.on("connection", (socket) => {
+            console.log("a user connected", socket.id);
+            // console.log(socket , 'socket')
+            this.io.emit("connection", "hello you are connected......");
+            socket.on("disconnect", () => {
+                console.log("user disconnected");
+            });
+            socket.on("chat-message", (msg) => {
+                console.log("message: ");
+                console.log("message: " + msg);
+                this.io.emit("chat message", msg);
+            });
+        });
+    }
+    /**
+     * Start the cron job.
+     */
+    startCronJob() {
+        const job = new cron_1.CronJob("* * * * *", // cronTime
+        function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                // let user = await usersService.getUsers()
+                attendanc_service_1.attservice.addAttendance({
+                    attendance: {},
+                });
+                console.log("You will see this message every minute");
+            });
+        }, // onTick
+        null, // onComplete
+        true, // start
+        "America/Los_Angeles" // timeZone
+        );
+        job.start();
     }
 }
 exports.Application = Application;

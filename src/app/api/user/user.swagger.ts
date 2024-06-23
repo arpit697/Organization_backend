@@ -29,5 +29,19 @@ export class RegisterData {
         type: '',
     })
     user_password: string;
+
+    @ApiModelProperty({
+        description: "confirm user password",
+        required: true,
+        type: '',
+    })
+    confirm_password: string;
+
+    @ApiModelProperty({
+        description : 'user date of birth',
+        required :false,
+        type: ''
+    })
+    date_of_bitrh:string
 }
 

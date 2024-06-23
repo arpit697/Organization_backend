@@ -1,6 +1,6 @@
-import { UserType } from "src/app/constants/user.type.constants";
+import { UserType } from "../../constants/user.type.constants";
 import { IClient, ISessionUser } from "./session.interface";
-import { tokenUtil } from "src/app/utils/jwt.utils";
+import { tokenUtil } from "../../utils/jwt.utils";
 import { SessionModel } from "./session.model";
 
 class SessionService {

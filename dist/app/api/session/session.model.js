@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SessionModel = void 0;
 const mongoose_1 = require("mongoose");
-const user_type_constants_1 = require("src/app/constants/user.type.constants");
+const user_type_constants_1 = require("../../constants/user.type.constants");
 const sessionSchema = new mongoose_1.Schema({
     clinet: {
         agent: String,

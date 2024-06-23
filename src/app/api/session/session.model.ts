@@ -1,5 +1,5 @@
 import { Schema, Types, model } from "mongoose";
-import { UserType } from "src/app/constants/user.type.constants";
+import { UserType } from "../../constants/user.type.constants";
 import { ISessionDocument } from "./session.interface";
 
 const sessionSchema = new Schema(

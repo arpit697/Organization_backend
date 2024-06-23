@@ -38,6 +38,22 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], RegisterData.prototype, "user_password", void 0);
+__decorate([
+    (0, swagger_express_ts_1.ApiModelProperty)({
+        description: "confirm user password",
+        required: true,
+        type: '',
+    }),
+    __metadata("design:type", String)
+], RegisterData.prototype, "confirm_password", void 0);
+__decorate([
+    (0, swagger_express_ts_1.ApiModelProperty)({
+        description: 'user date of birth',
+        required: false,
+        type: ''
+    }),
+    __metadata("design:type", String)
+], RegisterData.prototype, "date_of_bitrh", void 0);
 exports.RegisterData = RegisterData = __decorate([
     (0, swagger_express_ts_1.ApiModel)({
         description: "Register User Data",
