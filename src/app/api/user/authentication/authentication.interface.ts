@@ -8,6 +8,7 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   passwordToken?: string;
+  
 }
 
 export interface IUserDocument extends IUser, Document {

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2018"],
+    "lib": ["es2018" , "dom"],
     "target": "es6",
     "module": "commonjs",
     "outDir": "dist/",
@@ -21,7 +21,8 @@
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "typeRoots": ["./node_modules/@types", "./typings"]
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    
   },
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

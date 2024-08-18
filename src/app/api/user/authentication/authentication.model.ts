@@ -1,9 +1,8 @@
 import {Schema, model} from 'mongoose';
-import {IUserDocument} from './account.interface';
+import {IUserDocument} from './authentication.interface';
 import {passwordUtil} from '../../../utils/password.util';
-import {serverLogger} from '../../../utils/logger';
 
-const UserSchema = new Schema(
+const AuthenticationSchema = new Schema(
   {
     fullName: {
       type: String,
@@ -31,27 +30,26 @@ const UserSchema = new Schema(
     timestamps: true
   }
 );
-UserSchema.methods.verifyPassword = passwordUtil.verify;
+AuthenticationSchema.methods.verifyPassword = passwordUtil.verify;
 
-UserSchema.pre('save', function (this: IUserDocument, next: any) {
+AuthenticationSchema.pre('save', function (this: IUserDocument, next: any) {
   // Call Password Hook
-  serverLogger.warn('came');
+  // serverLogger.warn('came');
   passwordUtil.hook.call(this).then(next).catch(next);
   // Do other tasks
 });
 
-UserSchema.pre('updateOne', function (this: any, next: any) {
-  // Call Password Hook
+AuthenticationSchema.pre('updateOne', function (this: any, next: any) {
   console.log(this.getUpdate()['$setOnInsert']);
 
   passwordUtil.hookUser.call(this).then(next).catch(next);
   // Do other tasks
 });
 
-UserSchema.pre('findOneAndUpdate', function (this: IUserDocument, next: any) {
+AuthenticationSchema.pre('findOneAndUpdate', function (this: IUserDocument, next: any) {
   // Call Password Hook
   passwordUtil.hook.call(this).then(next).catch(next);
   // Do other tasks
 });
 
-export const UserModel = model<IUserDocument>('users', UserSchema);
+export const AuthenticationModel = model<IUserDocument>('authentication', AuthenticationSchema);

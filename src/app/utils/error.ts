@@ -11,3 +11,4 @@ export class ResponseError extends Error {
         super(message);
     }
 }
+
