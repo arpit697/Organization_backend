@@ -29,7 +29,8 @@ export const ACCOUNT_MESSAGES = {
 };
 export enum USER_STATUS {
   ACTIVE = 'ACTIVE',
-  BLOCKED = 'BLOCKED'
+  BLOCKED = 'BLOCKED',
+  INACTIVE = 'INACTIVE'
 }
 export enum TokenStatus {
   Active,

@@ -28,6 +28,7 @@ const sessionSchema = new Schema(
     // tslint:disable-next-line: object-literal-sort-keys
     createdAt: Date,
     updatedAt: Date,
+    expireAt: Date
   },
   {
     collection: "sessions",
