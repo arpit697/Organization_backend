@@ -17,6 +17,9 @@ import { CronJob } from "cron";
 import { usersService } from "./api/user/user.service";
 import { Server as SocketIOServer } from "socket.io"; // Import Socket.IO
 import { attservice } from "./api/attendance/attendanc.service";
+import { ssoMiddleware } from "./middlewares/sso";
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 const serverLogger = createNewLogger("server");
 
 const envFilePath = path.resolve(
@@ -138,6 +141,19 @@ export class Application {
     if (this.environment === "development") {
       this.instance.use(cors());
     }
+    // this.instance.use(session({
+    //   secret: 'your-secret-key',
+    //   resave: false,
+    //   saveUninitialized: true,
+    //   cookie: { secure: false } // true if using HTTPS
+    // }));
+    // this.instance.use((req, res, next) => {
+    //   console.log(req.session , 'bbbb');
+    //   next();
+    // });
+  
+    // Use API middleware
+    this.instance.use(ssoMiddleware);
 
     // Use API middleware
     this.instance.use(apiMiddleware);

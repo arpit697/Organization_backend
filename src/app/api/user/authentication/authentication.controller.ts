@@ -26,7 +26,7 @@ class AuthenticationController {
   login(req: Request, res: Response, next: NextFunction): void {
     const { email, password } = req.body;
     authenticationService
-      .createSession(email, password, req.client!)
+      .createSession(req , email, password, req.client!)
       .then((result: any): void => {
         res
           .status(200)

@@ -9,7 +9,7 @@ import {
   USER_STATUS,
 } from "./authentication.constants";
 import { SessionModel } from "../../session/session.model";
-
+import { Request } from "express";
 import { ResponseError } from "../../../utils/error";
 import { passwordUtil } from "../../../utils/password.util";
 import { tokenUtil } from "../../../utils/jwt.utils";
@@ -59,6 +59,7 @@ class AuthenticationService {
    * @param {IClient} client Client information
    */
   async createSession(
+    req : Request,
     email: string,
     password: string,
     client: IClient
@@ -71,6 +72,7 @@ class AuthenticationService {
     }
 
     const { sessionId, sessionExpireAt } = await sessionService.create(
+      <any>req,
       client,
       { userId: user._id, type: UserType.USER },
       AuthenticationService.ACCESS_TOKEN_EXPIRY
@@ -80,7 +82,7 @@ class AuthenticationService {
       sessionId,
       UserType.USER
     );
-
+    
     return {
       sessionId,
       sessionExpiry: sessionExpireAt,
