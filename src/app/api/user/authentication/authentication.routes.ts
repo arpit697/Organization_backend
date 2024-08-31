@@ -9,8 +9,8 @@ const authenticationRouter: Router = Router();
 
 authenticationRouter.post('/login', userValidators.login, extractClientDetails, authenticationController.login);
 authenticationRouter.post('/logout', authenticationController.logout);
-authenticationRouter.post('/renew', authenticationController.renew);
-authenticationRouter.post('/signup', userValidators.signup, extractClientDetails, authenticationController.signup);
+authenticationRouter.post('/renew-session', authenticationController.renew);
+authenticationRouter.post('/sign-up', userValidators.signup, extractClientDetails, authenticationController.signup);
 
 
 const secureRouter: Router = Router();

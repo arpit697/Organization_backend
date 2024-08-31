@@ -15,6 +15,10 @@ import {
  * @class AccountController
  * @description Controller to handle account-related operations such as login, logout, signup, profile management, and updating user details.
  */
+@ApiPath({
+  path: "",
+  name: "User Registration and Authentication",
+})
 class AuthenticationController {
   /**
    * @method login
@@ -23,10 +27,29 @@ class AuthenticationController {
    * @param {Response} res - Express response object to send the authentication result.
    * @param {NextFunction} next - Express next function to handle errors.
    */
+  @ApiOperationPost({
+    path: "/login",
+    description: "User Login",
+    summary:
+      "Authenticates a user with email and password, and creates a session.",
+    responses: {
+      200: {
+        description: "Success",
+        type: "String",
+      },
+    },
+    parameters: {
+      body: {
+        description: "Account Login Model",
+        required: true,
+        model: "Login Model",
+      },
+    },
+  })
   login(req: Request, res: Response, next: NextFunction): void {
     const { email, password } = req.body;
     authenticationService
-      .createSession(email, password, req.client!)
+      .createSession(req, email, password, req.client!)
       .then((result: any): void => {
         res
           .status(200)
@@ -42,6 +65,25 @@ class AuthenticationController {
    * @param {Response} res - Express response object to send the result of the logout operation.
    * @param {NextFunction} next - Express next function to handle errors.
    */
+  @ApiOperationPost({
+    path: "/logout",
+    description:
+      "Logs out a user by invalidating the session based on session ID",
+    summary: "Logs out a user by invalidating the session based on session ID",
+    responses: {
+      200: {
+        description: "Success",
+        type: "String",
+      },
+    },
+    parameters: {
+      body: {
+        description: "Account Logout",
+        required: true,
+        model: "Logout Model",
+      },
+    },
+  })
   logout(req: Request, res: Response, next: NextFunction): void {
     const { sessionId } = req.body;
     authenticationService
@@ -59,6 +101,23 @@ class AuthenticationController {
    * @param {Response} res - Express response object to send the result of the signup operation.
    * @param {NextFunction} next - Express next function to handle errors.
    */
+  @ApiOperationPost({
+    path: "/sign-up",
+    summary:'Registers a new user account with email, password, and full name',
+    responses: {
+      200: {
+        description: "Success",
+        type: "String",
+      },
+    },
+    parameters: {
+      body: {
+        description: "Account Registration",
+        required: true,
+        model: "Account Registration Model",
+      },
+    },
+  })
   signup(req: Request, res: Response, next: NextFunction): void {
     const { email, password, fullName } = req.body;
     authenticationService
@@ -71,20 +130,40 @@ class AuthenticationController {
       .catch(next);
   }
   /**
- * @method renew
- * @description Renews a user session using a refresh token and user type.
- * @param {Request} req - Express request object containing refreshToken and userType in the body.
- * @param {Response} res - Express response object to send the result of the session renewal operation.
- * @param {NextFunction} next - Express next function to handle errors.
- */
-renew(req: Request, res: Response, next: NextFunction) {
-  const { refreshToken, userType } = req.body;
-  authenticationService.renewSession(refreshToken, userType).then((data): void => {
-    res.status(200).json({ result: data });
-  })
-  .catch(next);
-}
+   * @method renew
+   * @description Renews a user session using a refresh token and user type.
+   * @param {Request} req - Express request object containing refreshToken and userType in the body.
+   * @param {Response} res - Express response object to send the result of the session renewal operation.
+   * @param {NextFunction} next - Express next function to handle errors.
+   */
 
+  @ApiOperationPost({
+    path: "/renew-session",
+    summary:'Renews a user session using a refresh token and user type',
+    responses: {
+      200: {
+        description: "Success",
+        type: "String",
+      },
+    },
+    parameters: {
+      body: {
+        description:
+          "Renews a user session using a refresh token and user type",
+        required: true,
+        model: "Renew Session Model",
+      },
+    },
+  })
+  renew(req: Request, res: Response, next: NextFunction) {
+    const { refreshToken, userType } = req.body;
+    authenticationService
+      .renewSession(refreshToken, userType)
+      .then((data): void => {
+        res.status(200).json({ result: data });
+      })
+      .catch(next);
+  }
 
   /**
    * @method profile

@@ -14,9 +14,8 @@ import { apiRouter } from "./api/api.routes";
 import dotenv from "dotenv";
 import path from "path";
 import { CronJob } from "cron";
-import { usersService } from "./api/user/user.service";
 import { Server as SocketIOServer } from "socket.io"; // Import Socket.IO
-import { attservice } from "./api/attendance/attendanc.service";
+
 const serverLogger = createNewLogger("server");
 
 const envFilePath = path.resolve(
@@ -138,6 +137,9 @@ export class Application {
     if (this.environment === "development") {
       this.instance.use(cors());
     }
+
+    // Use API middleware
+    // this.instance.use(ssoMiddleware);
 
     // Use API middleware
     this.instance.use(apiMiddleware);
@@ -262,21 +264,21 @@ export class Application {
   /**
    * Start the cron job.
    */
-  startCronJob() {
-    const job = new CronJob(
-      "* * * * *", // cronTime
-      async function () {
-        // let user = await usersService.getUsers()
-        attservice.addAttendance({
-          attendance: {},
-        });
-        console.log("You will see this message every minute");
-      }, // onTick
-      null, // onComplete
-      true, // start
-      "America/Los_Angeles" // timeZone
-    );
+  // startCronJob() {
+  //   const job = new CronJob(
+  //     "* * * * *", // cronTime
+  //     async function () {
+  //       // let user = await usersService.getUsers()
+  //       attservice.addAttendance({
+  //         attendance: {},
+  //       });
+  //       console.log("You will see this message every minute");
+  //     }, // onTick
+  //     null, // onComplete
+  //     true, // start
+  //     "America/Los_Angeles" // timeZone
+  //   );
 
-    job.start();
-  }
+  //   job.start();
+  // }
 }

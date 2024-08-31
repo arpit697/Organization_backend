@@ -7,10 +7,21 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>Upload a PDF File</h1>
-    <form action="http://localhost:3000/api/v1/pdf" method="POST" enctype="multipart/form-data">
-        <input type="file" name="pdfFile" accept=".pdf">
-        <button type="submit">Upload</button>
+    <h1>Hello, I am the SSO server</h1>
+    <form action="http://localhost:3000" method="POST" enctype="multipart/form-data">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+        
+       
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        
+        <button type="submit">Login and Upload</button>
     </form>
 </body>
+
 </html>

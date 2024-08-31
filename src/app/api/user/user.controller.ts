@@ -90,64 +90,64 @@ class UserController {
   //   }
   // })
 
-  @ApiOperationPost({
-    description: "Register User",
-    summary: "Register User",
-    parameters: {
-      body: {
-        description: "User Register Data",
-        required: true,
-        model: "RegisterDataModel",
-      },
-    },
-    responses: {
-      200: {
-        description: "Success",
-        type: "String",
-      },
-    },
-  })
-  async registerUser(req: Request, res: Response, next: NextFunction) {
-    const { user_name, user_email, user_password, confirm_password } = req.body;
-    await usersService
-      .findUser({ user_email: user_email })
-      .then(async (data) => {
-        if (data) {
-          res.status(409).json({ message: "User Already Exist" });
-        } else {
-          if (user_name && user_email && user_password && confirm_password) {
-            if (user_password === confirm_password) {
-              try {
-                const salt = await bcrypt.genSalt(100);
-                const hashPassword = await bcrypt.hash(
-                  user_password,
-                  parseInt(salt)
-                );
+  // @ApiOperationPost({
+  //   description: "Register User",
+  //   summary: "Register User",
+  //   parameters: {
+  //     body: {
+  //       description: "User Register Data",
+  //       required: true,
+  //       model: "RegisterDataModel",
+  //     },
+  //   },
+  //   responses: {
+  //     200: {
+  //       description: "Success",
+  //       type: "String",
+  //     },
+  //   },
+  // })
+  // async registerUser(req: Request, res: Response, next: NextFunction) {
+  //   const { user_name, user_email, user_password, confirm_password } = req.body;
+  //   await usersService
+  //     .findUser({ user_email: user_email })
+  //     .then(async (data) => {
+  //       if (data) {
+  //         res.status(409).json({ message: "User Already Exist" });
+  //       } else {
+  //         if (user_name && user_email && user_password && confirm_password) {
+  //           if (user_password === confirm_password) {
+  //             try {
+  //               const salt = await bcrypt.genSalt(100);
+  //               const hashPassword = await bcrypt.hash(
+  //                 user_password,
+  //                 parseInt(salt)
+  //               );
                 
-                usersService.registerUser({
-                  user_name,
-                  user_email,
-                  user_password : hashPassword,
-                }).then(
-                  ()=>{
-                    res.success("User Registerd Successfully in Data base", {
-                      user_name,
-                      user_email,
-                    });
-                  }
-                );
+  //               usersService.registerUser({
+  //                 user_name,
+  //                 user_email,
+  //                 user_password : hashPassword,
+  //               }).then(
+  //                 ()=>{
+  //                   res.success("User Registerd Successfully in Data base", {
+  //                     user_name,
+  //                     user_email,
+  //                   });
+  //                 }
+  //               );
                 
-              } catch (error) {}
-            } else {
-              res
-                .status(400)
-                .json({ message: "Password And Confirm Password" });
-            }
-          }
-        }
-      })
-      .catch((err) => res.status(400).json({ message: "Error" }));
-  }
+  //             } catch (error) {}
+  //           } else {
+  //             res
+  //               .status(400)
+  //               .json({ message: "Password And Confirm Password" });
+  //           }
+  //         }
+  //       }
+  //     })
+  //     .catch((err) => res.status(400).json({ message: "Error" }));
+  // }
 
   // static userRegistration = async (req, res) => {
   //   const { name, email, password, password_confirmation} = req.body

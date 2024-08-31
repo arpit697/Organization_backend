@@ -5,6 +5,7 @@ import { utilityFunctions } from "../../../../src/app/utils/utility.function";
 
 class SessionService {
   async create(
+    req: Request,
     client: IClient,
     user: ISessionUser,
     expiresIn?: any
