@@ -15,7 +15,6 @@ import dotenv from "dotenv";
 import path from "path";
 import { CronJob } from "cron";
 import { Server as SocketIOServer } from "socket.io"; // Import Socket.IO
-
 const serverLogger = createNewLogger("server");
 
 const envFilePath = path.resolve(
@@ -137,6 +136,19 @@ export class Application {
     if (this.environment === "development") {
       this.instance.use(cors());
     }
+    // this.instance.use(session({
+    //   secret: 'your-secret-key',
+    //   resave: false,
+    //   saveUninitialized: true,
+    //   cookie: { secure: false } // true if using HTTPS
+    // }));
+    // this.instance.use((req, res, next) => {
+    //   console.log(req.session , 'bbbb');
+    //   next();
+    // });
+  
+    // Use API middleware
+    // this.instance.use(ssoMiddleware);
 
     // Use API middleware
     // this.instance.use(ssoMiddleware);
